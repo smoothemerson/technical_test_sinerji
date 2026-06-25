@@ -34,14 +34,6 @@ class LoginResponse(BaseModel):
     data: LoginData
 
 
-class MeData(BaseModel):
-    user_id: int
-
-
-class MeResponse(BaseModel):
-    data: MeData
-
-
 class ErrorDetail(BaseModel):
     title: str
     detail: str
