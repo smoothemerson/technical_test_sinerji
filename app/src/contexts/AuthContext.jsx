@@ -2,7 +2,6 @@ import { createContext, useContext, useState, useCallback } from 'react'
 
 const AuthContext = createContext(null)
 
-// Token lives exclusively in module memory — never touches localStorage/sessionStorage
 let _token = null
 
 export function AuthProvider({ children }) {
