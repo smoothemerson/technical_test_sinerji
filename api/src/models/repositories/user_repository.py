@@ -7,7 +7,7 @@ class UserRepository(UserRepositoryInterface):
     def __init__(self, conn: PgConnection) -> None:
         self.__conn = conn
 
-    def insert_user(self, nome: str, email: str, password: bytes) -> None:
+    def insert_user(self, nome: str, email: str, password: str) -> None:
         cursor = self.__conn.cursor()
         cursor.execute(
             """
@@ -20,7 +20,7 @@ class UserRepository(UserRepositoryInterface):
         )
         self.__conn.commit()
 
-    def get_user_by_email(self, email: str) -> tuple[int, str, str, bytes]:
+    def get_user_by_email(self, email: str) -> tuple[int, str, str, str]:
         cursor = self.__conn.cursor()
         cursor.execute(
             """

@@ -28,6 +28,6 @@ class LoginCreator(LoginCreatorInterface):
             raise HttpNotFoundError("User not found")
         return user
 
-    def __verify_password(self, password: str, hashed_password: bytes) -> None:
+    def __verify_password(self, password: str, hashed_password: str) -> None:
         if not self.__password_handler.check_password(password, hashed_password):
             raise HttpBadRequestError("Wrong password")

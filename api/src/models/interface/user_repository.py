@@ -3,9 +3,9 @@ from abc import ABC, abstractmethod
 
 class UserRepositoryInterface(ABC):
     @abstractmethod
-    def insert_user(self, nome: str, email: str, password: bytes) -> None:
+    def insert_user(self, nome: str, email: str, password: str) -> None:
         pass
 
     @abstractmethod
-    def get_user_by_email(self, email: str) -> tuple[int, str, str, bytes]:
+    def get_user_by_email(self, email: str) -> tuple[int, str, str, str]:
         pass
