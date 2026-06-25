@@ -2,6 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE_URL}${path}`, {
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json', ...options.headers },
     ...options,
   })
@@ -10,8 +11,7 @@ async function request(path, options = {}) {
 
   if (!res.ok) {
     const message =
-      data?.message ||
-      data?.error ||
+      data?.errors?.[0]?.detail ||
       (res.status === 401 ? 'E-mail ou senha incorretos.' : `Erro ${res.status}`)
     throw new Error(message)
   }
@@ -33,13 +33,6 @@ export function login({ email, password }) {
   })
 }
 
-export function authedRequest(path, getToken, options = {}) {
-  const token = getToken()
-  return request(path, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  })
+export function logout() {
+  return request('/auth/logout', { method: 'POST' })
 }

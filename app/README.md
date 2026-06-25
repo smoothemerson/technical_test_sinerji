@@ -1,6 +1,6 @@
 # Frontend
 
-Interface React + Vite com autenticação JWT em memória.
+Interface React + Vite com autenticação via cookie HTTP-only gerenciado pelo backend.
 
 ## Pré-requisitos
 
@@ -9,9 +9,9 @@ Interface React + Vite com autenticação JWT em memória.
 
 ## Variáveis de ambiente obrigatórias
 
-| Variável       | Descrição                                      | Exemplo                      |
-|----------------|------------------------------------------------|------------------------------|
-| `VITE_API_URL` | URL base do backend, **sem** barra final       | `http://localhost:3000`      |
+| Variável       | Descrição                                | Exemplo                 |
+|----------------|------------------------------------------|-------------------------|
+| `VITE_API_URL` | URL base do backend, **sem** barra final | `http://localhost:3000` |
 
 Copie `.env.example` para `.env` e preencha o valor:
 
@@ -30,23 +30,23 @@ O Vite dev server ficará disponível em **http://localhost:5173**.
 
 ## Apontando para outro backend
 
-Edite `.env` (ou exporte a variável antes de subir o compose):
-
 ```bash
 VITE_API_URL=https://api.meudominio.com docker compose up --build
 ```
 
 ## Rotas disponíveis
 
-| Rota          | Descrição                                          |
-|---------------|----------------------------------------------------|
-| `/register`   | Cadastro — nome, e-mail e senha (≥ 8 caracteres)   |
-| `/login`      | Login — e-mail e senha                             |
-| `/dashboard`  | Rota protegida — redireciona para `/login` se não autenticado |
+| Rota         | Descrição                                                     |
+|--------------|---------------------------------------------------------------|
+| `/register`  | Cadastro — nome, e-mail e senha (≥ 8 caracteres)             |
+| `/login`     | Login — e-mail e senha                                        |
+| `/dashboard` | Rota protegida — redireciona para `/login` se não autenticado |
 
-## Observações de segurança
+## Autenticação
 
-- O JWT é armazenado **exclusivamente em memória** (React Context + variável de módulo).
-- Nunca é escrito em `localStorage`, `sessionStorage` ou cookies.
-- Enviado via header `Authorization: Bearer <token>` em todas as requisições autenticadas.
-- Ao recarregar a página o token é perdido e o usuário precisa fazer login novamente — comportamento intencional.
+O token JWT é gerenciado inteiramente pelo backend via **cookie HTTP-only**:
+
+- O frontend nunca acessa o token diretamente.
+- O browser envia o cookie automaticamente em todas as requisições com `credentials: 'include'`.
+- O logout chama `POST /auth/logout` no backend, que apaga o cookie.
+- Protegido contra XSS (cookie inacessível ao JavaScript) e CSRF (cookie `SameSite=Strict`).

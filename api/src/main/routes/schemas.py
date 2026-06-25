@@ -27,7 +27,6 @@ class LoginData(BaseModel):
     access: bool
     nome: str
     email: str
-    token: str
 
 
 class LoginResponse(BaseModel):

@@ -2,25 +2,14 @@ import { createContext, useContext, useState, useCallback } from 'react'
 
 const AuthContext = createContext(null)
 
-let _token = null
-
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const login = useCallback((token) => {
-    _token = token
-    setIsAuthenticated(true)
-  }, [])
-
-  const logout = useCallback(() => {
-    _token = null
-    setIsAuthenticated(false)
-  }, [])
-
-  const getToken = useCallback(() => _token, [])
+  const login = useCallback(() => setIsAuthenticated(true), [])
+  const logout = useCallback(() => setIsAuthenticated(false), [])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, getToken }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

@@ -73,6 +73,17 @@ docker compose up --build
 
 ---
 
+## Autenticação
+
+O JWT é gerenciado pelo backend via **cookie HTTP-only**:
+
+- `POST /auth/login` — gera o token e seta o cookie `access_token` na resposta
+- `POST /auth/logout` — apaga o cookie
+- O cookie é `HttpOnly` (inacessível ao JavaScript) e `SameSite=Strict` (proteção CSRF)
+- Validade configurável via `JWT_HOURS` no `.env`
+
+---
+
 ## Testes
 
 ```bash

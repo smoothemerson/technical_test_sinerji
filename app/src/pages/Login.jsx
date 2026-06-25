@@ -23,8 +23,8 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      const data = await apiLogin(fields)
-      login(data.access_token)
+      await apiLogin(fields)
+      login()
       navigate('/dashboard', { replace: true })
     } catch (err) {
       setError(err.message || 'E-mail ou senha incorretos.')
