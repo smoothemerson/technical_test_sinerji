@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.main.routes.users_routes import bank_router
+from src.main.routes.users_routes import user_router
 from src.models.settings.db_connection_handler import db_connection_handler
 
 db_connection_handler.connect()
@@ -16,4 +16,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(bank_router)
+app.include_router(user_router)

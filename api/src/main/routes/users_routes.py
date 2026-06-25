@@ -15,10 +15,10 @@ from src.main.routes.schemas import (
 )
 from src.views.http_types.http_request import HttpRequest
 
-bank_router = APIRouter(prefix="/auth", tags=["Auth"])
+user_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
-@bank_router.post(
+@user_router.post(
     "/register",
     response_model=RegisterResponse,
     status_code=status.HTTP_201_CREATED,
@@ -36,7 +36,7 @@ async def register_user(body: RegisterRequest):
         return JSONResponse(content=http_response.body, status_code=http_response.status_code)
 
 
-@bank_router.post(
+@user_router.post(
     "/login",
     response_model=LoginResponse,
     status_code=status.HTTP_200_OK,
@@ -55,7 +55,7 @@ async def login(body: LoginRequest):
         return JSONResponse(content=http_response.body, status_code=http_response.status_code)
 
 
-@bank_router.get(
+@user_router.get(
     "/me",
     response_model=MeResponse,
     status_code=status.HTTP_200_OK,
