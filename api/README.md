@@ -45,12 +45,7 @@ POSTGRES_DB=postgres
 uv sync
 ```
 
-### 4. Crie a tabela no banco
-```bash
-psql -U postgres_user -d postgres -f init/schema.sql
-```
-
-### 5. Inicie o servidor
+### 4. Inicie o servidor
 ```bash
 uv run python run.py
 ```
