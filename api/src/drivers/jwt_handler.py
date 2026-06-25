@@ -23,7 +23,7 @@ class JwtHandler:
         token_information = decode(
             token,
             key=jwt_infos["KEY"],
-            algorithms=jwt_infos["ALGORITHM"],
+            algorithms=[jwt_infos["ALGORITHM"]],
         )
 
         return token_information

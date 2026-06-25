@@ -1,5 +1,9 @@
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 jwt_infos = {
     "KEY": os.getenv("KEY", ""),
     "ALGORITHM": os.getenv("ALGORITHM", "HS256"),

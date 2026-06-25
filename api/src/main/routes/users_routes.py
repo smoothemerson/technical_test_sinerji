@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from src.errors.error_handler import handle_errors
 from src.main.composer.login_creator_composer import login_creator_composer
 from src.main.composer.user_register_composer import user_register_composer
+from src.main.middlewares.auth_jwt import auth_jwt_verify
 from src.views.http_types.http_request import HttpRequest
 
 bank_router = APIRouter(prefix="/auth")
@@ -28,6 +29,19 @@ async def login(request: Request):
         http_request = HttpRequest(body=body)
         http_response = login_creator_composer().handle(http_request)
         return JSONResponse(content=http_response.body, status_code=http_response.status_code)
+    except Exception as exception:
+        http_response = handle_errors(exception)
+        return JSONResponse(content=http_response.body, status_code=http_response.status_code)
+
+
+@bank_router.get("/me")
+async def me(request: Request):
+    try:
+        token_info = auth_jwt_verify(request)
+        return JSONResponse(
+            content={"data": {"user_id": token_info["user_id"]}},
+            status_code=200,
+        )
     except Exception as exception:
         http_response = handle_errors(exception)
         return JSONResponse(content=http_response.body, status_code=http_response.status_code)
