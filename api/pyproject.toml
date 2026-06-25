@@ -1,0 +1,30 @@
+[project]
+name = "jwt-authentication-and-security"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bcrypt>=5.0.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.34.0",
+    "ipykernel>=7.2.0",
+    "psycopg2-binary>=2.9.12",
+    "pyjwt>=2.13.0",
+    "pytest>=9.0.3",
+    "python-dotenv>=1.2.2",
+    "pytest-cov>=6.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["src"]
+python_files = ["*_test.py"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*_test.py", "*/interfaces/*", "*/__init__.py"]
+
+[tool.coverage.report]
+show_missing = true
